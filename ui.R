@@ -29,17 +29,32 @@ library(shinyjs)
 library(shinyBS)
 library(shinycssloaders)
 library(htmlwidgets)
+library(gfonts)
 
 ui = fluidPage(
-  tags$head(HTML("<title>BWPR Credit Calculator Tool</title> <link rel='icon' type='image/gif/png' href='logo.png'>")),
+  
+  #palanquin
+  use_font("palanquin", "www/css/palanquin.css"),
+  tags$head(HTML("<title>BWPR Credit Calculator Tool</title> <link rel='icon' type='image/gif/png' href='logo.png'>"),
+            tags$style(HTML(
+              "
+              .tabbable > .nav > li > a {color: #0033a0; background-color: #e6f7ff; border-color:#e1e5eb;}
+              .tabbable > .nav > .active > a,
+              .tabbable > .nav > .active > a:focus,
+              .tabbable > .nav > .active > a:hover {color: white; background-color: #0033a0;}
+              .tabbable > .nav > li > a:hover {color: white; background-color:#0033a0;text-decoration:underline;}
+              .butt{background-color:#0033a0; color: white; border-color:##041045;}
+              "
+            )
+            )),
   titlePanel(fluidRow(
     column(9,p("BWPR's credit calculator was developed to assist NGOs and others to estimate potential impervious restoration credit and TMDL reductions from their project.  Please select the relevant tab to enter data and estimate the credit and reductions.
-    ",style="font-size:18px;font-style:normal; font-weight: 400")),column(3, tags$a(img(src='bwpr_logo_aarivers.jpg', align = "right",height = 279*0.4, width = 558*0.4, style="padding: 0px"),href="https://www.aarivers.org")),
+    ",style="font-size:18px;font-style:normal; font-weight: 400")),column(3, tags$a(img(src='bwpr_logo_aarivers.jpg', align = "right",height = 279*0.4, width = 558*0.4, style="padding: 0px"))),
     br(),
     column(12,p("Note: this tool is provided 'as is' without warranty of any kind, either expressed, implied, or statutory. The user assumes the entire risk as to quality and performance of the data from this tool.    
-                 ",style="font-size:11.5px;font-style:italic")),br(), 
+                 ",style="font-size:11.5px;font-style:normal")),br(), 
     
-    column(3,a(actionButton(inputId = "email1", label = "  Contact",icon = icon("envelope", lib = "font-awesome")),href="mailto:pwthom19@aacounty.org"))
+    column(3,a(actionButton(inputId = "email1", label = "  Contact",icon = icon("envelope", lib = "font-awesome"),class = "butt"),href="mailto:pwthom19@aacounty.org"))
   )),
   br(),
   tabsetPanel(id = "tabs",
@@ -858,11 +873,11 @@ ui = fluidPage(
               tabPanel("Land River Segment Map", value = "8",icon=icon("map-marked"),
                        
                        fluidPage(br(),column(12,wellPanel(style = "background: #e6f7ff",
-                                                          h4(strong("Click on the land river segment in the location of the proposed BMP. Land River Segment ID will show in popup when clicking on the appropriate segment.")),
+                                                          h4(style="text-align: center;",strong("Click on the land river segment in the location of the proposed BMP. Land River Segment ID will show in popup when clicking on the appropriate segment.")),
                        ),
                        ),
                        br(),
-                       leafletOutput("mymap",height = 520, width = "100%")%>% withSpinner(color="#cdf7d4")
+                       leafletOutput("mymap",height = 520, width = "100%")%>% withSpinner(color="#0033a0", type = 6, size = 1)
                        
                        )
               ),
@@ -874,9 +889,9 @@ ui = fluidPage(
               tabPanel("Shoreline Erosion Map", value = "8",icon=icon("map-marked"),
                        
                        fluidPage(br(),column(12,wellPanel(style = "background: #e6f7ff",
-                                                          h4(strong("Click on transect to see annual erosion rate. Rendering may be slow due to the size of this dataset.")))),
+                                                          h4(style="text-align: center;",strong("Click on transect to see annual erosion rate. Rendering may be slow due to the size of this dataset.")))),
                                  br(),
-                                 leafletOutput("mymap2",height = 550, width = "100%")%>% withSpinner(color="#cdf7d4")
+                                 leafletOutput("mymap2",height = 550, width = "100%")%>% withSpinner(color="#0033a0", type = 6, size = 1)
                                  
                        )
               )
