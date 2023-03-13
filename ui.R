@@ -20,7 +20,6 @@
 #==========================================================================================
 
 library(shiny)
-library(inlmisc)
 library(stringr)
 library(wesanderson)
 library(sf)
@@ -54,7 +53,9 @@ ui = fluidPage(
     column(12,p("Note: this tool is provided 'as is' without warranty of any kind, either expressed, implied, or statutory. The user assumes the entire risk as to quality and performance of the data from this tool.    
                  ",style="font-size:11.5px;font-style:normal")),br(), 
     
-    column(3,a(actionButton(inputId = "email1", label = "  Contact",icon = icon("envelope", lib = "font-awesome"),class = "butt"),href="mailto:pwthom19@aacounty.org"))
+    column(3,a(actionButton(inputId = "email1", label = "  Contact",icon = icon("envelope", lib = "font-awesome"),class = "butt"),href="mailto:bwpr_app_support@aacounty.org"),
+           a(actionButton(inputId = "github1", label = "",icon = icon("github", lib = "font-awesome"),
+                          class = "butt"),href="https://github.com/joshuajdthompson",target="_blank"))
   )),
   br(),
   tabsetPanel(id = "tabs",
@@ -152,16 +153,16 @@ ui = fluidPage(
                                                       options = list(container = "body")
                                             ))),br(),
                                             fluidRow(column(6,numericInput("wqv.sbmp",
-                                                                           label = h5(strong("WQv (ac/ft):"),
+                                                                           label = h5(strong("WQv Achieved (ac/ft):"),
                                                                                       tags$style(type = "text/css", "#q7sbmp {vertical-align: bottom; width: 16px !important; height: 14.4px !important; font-size: 5.4px !important; line-height: 2px !important; padding: 0px !important;}"),
                                                                                       bsButton("q7sbmp", label = "", icon = icon("question"), style = "primary", size = "extra-small")),
                                                                            value = NULL, width = '100%'
                                             ),
-                                            bsPopover(id = "q7sbmp", title = "Water Quality Volume",
-                                                      content = paste0("Please refer to the ", 
-                                                                       a("Maryland Stormwater Design Manual for Guidance.", 
+                                            bsPopover(id = "q7sbmp", title = " Water Quality Volume Achieved",
+                                                      content = paste0("The Water Quality Volume (WQv) achieved is defined as the storage volume (surface and/or subsurface) within a given BMP, which is a portion of the extended detention volume. A structural BMP should be sized to meet the required WQv, which is defined as the storage needed to capture and treat the runoff from 90% of the average annual rainfall. In numerical terms, the required WQv is equivalent to an inch of rainfall multiplied by the volumetric runoff coefficient (Rv) and site area.  In some instances, a BMP may treat greater or less than the one inch of rainfall, therefore the WQv achieved may differ from the required WQv. Please refer to the ", 
+                                                                       a("Maryland Stormwater Design Manual", 
                                                                          href = "https://mde.maryland.gov/programs/water/stormwatermanagementprogram/pages/stormwater_design.aspx",
-                                                                         target="_blank")
+                                                                         target="_blank"), " for more infomation."
                                                       ),
                                                       placement = "right", 
                                                       trigger = "focus", 
@@ -178,8 +179,8 @@ ui = fluidPage(
                                                                       placeholder = 'Please select an option below',
                                                                       onInitialize = I('function() { this.setValue(""); }')
                                                                     )),
-                                                   bsPopover(id = "q5sbmp", title = "Is this a chapter 3 BMP that provides enhanced features?",
-                                                             content = paste0("If unknown select no, otherwise please refer to ", 
+                                                   bsPopover(id = "q5sbmp", title = "Is this a Chapter 3 BMP that provides enhanced features?",
+                                                             content = paste0("The Green Stormwater Infrastructure (GSI) credit is provided when a BMP provides water quality treatment and incorporates natural processes using vegetation and soils. If this BMP is a Runoff Reduction (RR) practice, the tool will automatically apply the GSI credit to the BMP. If the BMP is a Stormwater Treatment (ST) practice, it may still receive GSI credit, but the BMP type must be one of a subset of Chapter 3 (C3) BMPs in the Maryland Stormwater Design Manual that is constructed to meet the required design criteria and incorporates additional enhanced design features. The list of acceptable C3 BMP types and enhanced features can be found in Tables 19 and 20 of ", 
                                                                               a("MDE 2020 Guidance.", 
                                                                                 href = "https://mde.maryland.gov/programs/Water/StormwaterManagementProgram/Documents/2020%20MS4%20Accounting%20Guidance.pdf",
                                                                                 target="_blank")
@@ -284,7 +285,7 @@ ui = fluidPage(
                                             bsPopover(id = "q1stre", title = "Stream Protocol Reductions",
                                                       content = paste0("If no, enter length only. Credit will use the planning rate and will be based on length. If yes, enter protocol data but do not apply delivery factors to these numbers. Further information on stream restoration protocols can be found by ", 
                                                                        a("reviewing the expert panel guidance.", 
-                                                                         href = "https://chesapeakestormwater.net/bmp-resources/urban-stream-restoration/",
+                                                                         href = "https://d18lev1ok5leia.cloudfront.net/chesapeakebay/documents/Approved-Verification-Memo-061819.pdf",
                                                                          target="_blank")
                                                       ),
                                                       placement = "right", 
@@ -366,7 +367,7 @@ ui = fluidPage(
                                             bsPopover(id = "q1outspsc", title = "Select BMP Type",
                                                       content = paste0("If the BMP is a regenerative step pool conveyance system, it can be credited by entering the BMP drainage area, impervious area, and water quality volume (Protocol 4). Additionally, a regenerative step pool conveyance system can also be credited using Protocol 5. Protocol 4 and 5 are additive. If the BMP is an outfall stabilization, do not enter BMP drainage area, impervious area, or a water quality volume (Protocol 4). Outfall stabilizations should only be credited using Protocol 5. When entering Protocol 5 data, do no apply delivery factors. Further information on Protocol 5 can be found by ",  
                                                                        a("reviewing the expert panel guidance.", 
-                                                                         href = "https://chesapeakestormwater.net/wp-content/uploads/dlm_uploads/2019/10/FINAL-APPROVED-OUTFALL-RESTORATION-MEMO-101519.pdf",
+                                                                         href = "https://d18lev1ok5leia.cloudfront.net/chesapeakebay/documents/approval_draft_outfall_restoration_memo_070119.pdf",
                                                                          target="_blank"), " For further information, please refer to ", 
                                                                        a("MDE 2020 Guidance.", 
                                                                          href = "https://mde.maryland.gov/programs/Water/StormwaterManagementProgram/Documents/2020%20MS4%20Accounting%20Guidance.pdf",
@@ -408,8 +409,20 @@ ui = fluidPage(
                                                       options = list(container = "body")
                                             ),
                                             numericInput("wqv.outspsc",
-                                                         label = h5(strong("Water Quality Volume, WQv (ac/ft):")),
+                                                         label = h5(strong("WQv Achieved (ac/ft):"),
+                                                                    tags$style(type = "text/css", "#q5outspsc {vertical-align: bottom; width: 16px !important; height: 14.4px !important; font-size: 5.4px !important; line-height: 2px !important; padding: 0px !important;}"),
+                                                                    bsButton("q5outspsc", label = "", icon = icon("question"), style = "primary", size = "extra-small")),
                                                          value = NULL, width = '100%'
+                                            ),
+                                            bsPopover(id = "q5outspsc", title = " Water Quality Volume Achieved",
+                                                      content = paste0("The Water Quality Volume (WQv) achieved only applies to SPSCs and is defined as the storage volume (surface and/or subsurface) within a given BMP, which is a portion of the extended detention volume. A structural BMP should be sized to meet the required WQv, which is defined as the storage needed to capture and treat the runoff from 90% of the average annual rainfall. In numerical terms, the required WQv is equivalent to an inch of rainfall multiplied by the volumetric runoff coefficient (Rv) and site area.  In some instances, a BMP may treat greater or less than the one inch of rainfall, therefore the WQv achieved may differ from the required WQv. Please refer to the ", 
+                                                                       a("Maryland Stormwater Design Manual", 
+                                                                         href = "https://mde.maryland.gov/programs/water/stormwatermanagementprogram/pages/stormwater_design.aspx",
+                                                                         target="_blank"), " for more infomation."
+                                                      ),
+                                                      placement = "right", 
+                                                      trigger = "focus", 
+                                                      options = list(container = "body")
                                             )),
                                             column(6,numericInput("p5tn.outspsc",
                                                                   label = h5(strong("Protocol 5 TN reduction (lbs):")),
@@ -517,9 +530,9 @@ ui = fluidPage(
                                                                         onInitialize = I('function() { this.setValue(""); }')
                                                                       )),
                                                      bsPopover(id = "q1shst", title = "Shoreline Protocol Reductions",
-                                                               content = paste0("If no, enter length only. Credit will use the planning rate and will be based on length. If yes, enter data below. Further information on shoreline restoration protocols can be found by ", 
+                                                               content = paste0("Shoreline protocols should be used where possible. However the planning rate can be used where the proposed restoration is ‘non-conforming’, defined as reaches where Protocol 1 (Prevented Sediment) reductions are negligible, but the project results in ecological lift. Examples of non-conforming reaches include armored reaches that are converted to living shorelines. <br><br>If the shoreline protocols are not being used select ‘no’ and only enter the length of the restoration. Credit will use the planning rate and will be based on length. If yes, enter data below. Further information on shoreline restoration protocols can be found by ", 
                                                                                 a("reviewing the expert panel guidance.", 
-                                                                                  href = "https://chesapeakestormwater.net/wp-content/uploads/dlm_uploads/2018/05/SHORT_Final_Shoreline-Management-Protocol_11-24-19_FINAL.pdf",
+                                                                                  href = "https://d18lev1ok5leia.cloudfront.net/chesapeakebay/documents/Final_Shoreline-Management_RPT__APPENDICES_12-18-19.pdf",
                                                                                   target="_blank")
                                                                ),
                                                                placement = "right", 
@@ -553,7 +566,7 @@ ui = fluidPage(
                                                                     value = 93.6, width = '100%'
                                               ),
                                               bsPopover(id = "q3shst", title = "Soil Bulk Density",
-                                                        content = paste0("Unless measured, use the default of 93.6 lbs/ft3." 
+                                                        content = paste0("Bulk density is defined as the density of a volume of soil as it exists naturally in-situ. Bulk density is calculated as the dry weight of soil divided by its volume. This volume includes the volume of soil particles and the volume of pores among soil particles. Unless measured, enter a default bulk density value of 93.6 lbs/ft3." 
                                                         ),
                                                         placement = "right", 
                                                         trigger = "focus", 
@@ -566,7 +579,7 @@ ui = fluidPage(
                                                            value = 0.551, width = '100%'
                                               ),
                                               bsPopover(id = "q4shst", title = "Sand Reduction Factor",
-                                                        content = paste0("Unless measured, use Maryland default of 0.551." 
+                                                        content = paste0("The final TSS pollutant load reduction should be reduced by the sand component in the sediment prevented by the stabilization practice to assure that pollution reduction credit is not given for reductions in sand, which can be beneficial to the shoreline. The sediment reduction credit for shoreline stabilizations is almost entirely based on fine sediment.  Unless the percentage of sand is measured at the site, use Maryland default of 0.551." 
                                                         ),
                                                         placement = "right", 
                                                         trigger = "focus", 
@@ -579,7 +592,7 @@ ui = fluidPage(
                                                            value = 1, width = '100%'
                                               ),
                                               bsPopover(id = "q5shst", title = "Bank Instability Reduction Factor",
-                                                        content = paste0("Use the default value of 1.00. If slope stability has not been addressed, enter 0.5." 
+                                                        content = paste0("The bank instability reduction factor is used to reduce prevented sediment credit where projects do not adequately address the critical angle of repose. As the angle of repose is critical for maintaining the bank stability, projects with slopes greater than the angle of repose should enter 0.5, otherwise, enter the default value of 1.00." 
                                                         ),
                                                         placement = "right", 
                                                         trigger = "focus", 

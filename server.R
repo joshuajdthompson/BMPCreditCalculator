@@ -21,7 +21,6 @@
 #==========================================================================================
 
 library(shiny)
-library(inlmisc)
 library(stringr)
 library(wesanderson)
 library(sf)
@@ -483,7 +482,8 @@ shinyServer(function(input, output) {
     leaflet() %>%
       setView(lng = -76.5, lat = 38.9, zoom = 13) %>%
       addProviderTiles(providers$Stamen.TonerLite,
-                       options = providerTileOptions(noWrap = TRUE)) %>%
+                       options = providerTileOptions(noWrap = TRUE), group = "Stamen Base Map") %>%
+      addProviderTiles(providers$Esri.WorldImagery, group = "Esri Imagery") %>%
       addPolylines(data = aashoretransects, 
                    fill = TRUE,
                    color = "red", 
@@ -497,6 +497,8 @@ shinyServer(function(input, output) {
         width = 200, height = 200,
         toggleDisplay = FALSE,
         aimingRectOptions = list(color = "red", weight = 1, clickable = FALSE),
-        zoomLevelOffset=-5)
+        zoomLevelOffset=-5) %>% 
+      addLayersControl(baseGroups = c("Stamen Base Map","Esri Imagery"),
+                       options = layersControlOptions(collapsed = FALSE))
   })
 })
